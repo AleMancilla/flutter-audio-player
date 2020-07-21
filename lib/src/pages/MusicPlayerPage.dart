@@ -68,7 +68,31 @@ class Lyris extends StatelessWidget {
   }
 }
 
-class TituloYPlay extends StatelessWidget {
+class TituloYPlay extends StatefulWidget {
+
+  @override
+  _TituloYPlayState createState() => _TituloYPlayState();
+}
+
+class _TituloYPlayState extends State<TituloYPlay> with SingleTickerProviderStateMixin{
+
+  bool isPlaying = false;
+  AnimationController playAnimation;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    playAnimation = AnimationController(vsync: this,duration: Duration(milliseconds: 500));
+
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    playAnimation.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -85,9 +109,20 @@ class TituloYPlay extends StatelessWidget {
             ],
           ),
           FloatingActionButton(
-            onPressed: (){},
+            onPressed: (){
+              if(this.isPlaying){
+                playAnimation.reverse();
+                this.isPlaying = false;
+              }else{
+                playAnimation.forward();
+                this.isPlaying = true;
+              }
+            },
             backgroundColor: Colors.orange,
-            child: Icon(Icons.play_arrow),
+            child: AnimatedIcon(
+              icon: AnimatedIcons.play_pause, 
+              progress: playAnimation
+            )
           )
         ],
       ),
