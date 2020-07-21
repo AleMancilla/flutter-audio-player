@@ -6,19 +6,47 @@ class MusicPlayerPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
+      body: Stack(
         children: [
-          CustomAppBar(),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          BackGorund(),
+          Column(
             children: [
-              ImagenDiscoDuracion(),
-              BarraProgreso()
+              CustomAppBar(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  ImagenDiscoDuracion(),
+                  BarraProgreso()
+                ],
+              ),
+              TituloYPlay(),
+              Expanded(child: Lyris())
             ],
           ),
-          TituloYPlay(),
-          Expanded(child: Lyris())
         ],
+      ),
+    );
+  }
+}
+
+class BackGorund extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    return Container(
+      width: double.infinity,
+      // color: Colors.red,
+      height: size.height * 0.8,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.only(bottomLeft: Radius.circular(70)),
+        gradient: LinearGradient(
+          begin: Alignment.centerLeft,
+          end: Alignment.center,
+          colors: [
+            Color(0xff33333E),
+            Color(0xff201E28),
+          ]
+        )
       ),
     );
   }
