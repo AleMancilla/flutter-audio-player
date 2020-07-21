@@ -8,9 +8,46 @@ class MusicPlayerPage extends StatelessWidget {
       body: Column(
         children: [
           CustomAppBar(),
-          ImagenDiscoDuracion()
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              ImagenDiscoDuracion(),
+              BarraProgreso()
+            ],
+          )
         ],
       ),
+    );
+  }
+}
+
+class BarraProgreso extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Text("00:00", style: TextStyle(color: Colors.white54),),
+
+        Stack(
+          children: [
+            Container(
+              height: 200.0,
+              width: 5.0,
+              color: Colors.white12,
+            ),
+            Positioned(
+              bottom: 0.0,
+              child: Container(
+                height: 100.0,
+                width: 5.0,
+                color: Colors.white54,
+              ),
+            ),
+          ],
+        ),
+
+        Text("00:00", style: TextStyle(color: Colors.white54),),
+      ],
     );
   }
 }
