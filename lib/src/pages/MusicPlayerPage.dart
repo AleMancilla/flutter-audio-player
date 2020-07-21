@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:music_player/src/Widgets/CustomAppBar.dart';
+import 'package:music_player/src/helpers/helpers.dart';
 
 class MusicPlayerPage extends StatelessWidget {
   @override
@@ -15,8 +16,25 @@ class MusicPlayerPage extends StatelessWidget {
               BarraProgreso()
             ],
           ),
-          TituloYPlay()
+          TituloYPlay(),
+          Expanded(child: Lyris())
         ],
+      ),
+    );
+  }
+}
+
+class Lyris extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+
+    final lirics = getLyrics();
+    return Container(
+      child: ListWheelScrollView(
+        itemExtent: 42,
+        diameterRatio: 1.5,
+
+        children: lirics.map((e) => Text(e,style: TextStyle(fontSize: 20.0,color: Colors.white.withOpacity(0.6)),)).toList()
       ),
     );
   }
