@@ -14,6 +14,34 @@ class MusicPlayerPage extends StatelessWidget {
               ImagenDiscoDuracion(),
               BarraProgreso()
             ],
+          ),
+          TituloYPlay()
+        ],
+      ),
+    );
+  }
+}
+
+class TituloYPlay extends StatelessWidget {
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 25.0),
+      padding: const EdgeInsets.symmetric(horizontal: 40.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Column(
+            children: [
+              Text("Titulo",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30.0,color: Colors.white60),),
+              Text("Subtitulo",style: TextStyle(color: Colors.white60),),
+            ],
+          ),
+          FloatingActionButton(
+            onPressed: (){},
+            backgroundColor: Colors.orange,
+            child: Icon(Icons.play_arrow),
           )
         ],
       ),
