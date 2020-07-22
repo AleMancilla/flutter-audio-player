@@ -1,6 +1,9 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:music_player/src/Widgets/CustomAppBar.dart';
 import 'package:music_player/src/helpers/helpers.dart';
+import 'package:music_player/src/models/AudioPlayerModel.dart';
+import 'package:provider/provider.dart';
 
 class MusicPlayerPage extends StatelessWidget {
   @override
@@ -110,12 +113,15 @@ class _TituloYPlayState extends State<TituloYPlay> with SingleTickerProviderStat
           ),
           FloatingActionButton(
             onPressed: (){
+              final audioPlayerModel = Provider.of<AudioPlayerModel>(context,listen: false);
               if(this.isPlaying){
                 playAnimation.reverse();
                 this.isPlaying = false;
+                audioPlayerModel.controller.stop();
               }else{
                 playAnimation.forward();
                 this.isPlaying = true;
+                audioPlayerModel.controller.repeat();
               }
             },
             backgroundColor: Colors.orange,
@@ -164,6 +170,7 @@ class BarraProgreso extends StatelessWidget {
 class ImagenDiscoDuracion extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final audioPlayerModel = Provider.of<AudioPlayerModel>(context);
     return Container(
       padding: EdgeInsets.all(20.0),
       width: 250.0,
@@ -174,7 +181,13 @@ class ImagenDiscoDuracion extends StatelessWidget {
           alignment: Alignment.center,
           children: [
 
-            Image(image: AssetImage("assets/aurora.jpg")),
+            SpinPerfect(
+              duration: Duration(seconds: 10),
+              infinite: true,
+              manualTrigger: true,
+              controller: (animationController)=> audioPlayerModel.controller = animationController,
+              child: Image(image: AssetImage("assets/aurora.jpg"))
+            ),
 
             Container(
               width: 25.0,
