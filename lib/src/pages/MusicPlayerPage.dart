@@ -1,4 +1,5 @@
 import 'package:animate_do/animate_do.dart';
+import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
 import 'package:music_player/src/Widgets/CustomAppBar.dart';
 import 'package:music_player/src/helpers/helpers.dart';
@@ -82,19 +83,34 @@ class _TituloYPlayState extends State<TituloYPlay> with SingleTickerProviderStat
   bool isPlaying = false;
   AnimationController playAnimation;
 
+  final assetAudioPlayer = new AssetsAudioPlayer();
+  bool firsTime = true ;
+
+  void open()async{
+    final audioPlayerModel = Provider.of<AudioPlayerModel>(context,listen: false);
+    await assetAudioPlayer.open(Audio('assets/Breaking-Benjamin-Far-Away.mp3'));
+    assetAudioPlayer.currentPosition.listen((event) { 
+      audioPlayerModel.current = event;
+    });
+
+    assetAudioPlayer.current.listen((event) {
+      audioPlayerModel.songDuration = event.audio.duration;
+    });
+  }
+
   @override
   void initState() {
     // TODO: implement initState
-    super.initState();
     playAnimation = AnimationController(vsync: this,duration: Duration(milliseconds: 500));
+    super.initState();
 
   }
 
   @override
   void dispose() {
     // TODO: implement dispose
-    super.dispose();
     playAnimation.dispose();
+    super.dispose();
   }
 
   @override
@@ -122,6 +138,13 @@ class _TituloYPlayState extends State<TituloYPlay> with SingleTickerProviderStat
                 playAnimation.forward();
                 this.isPlaying = true;
                 audioPlayerModel.controller.repeat();
+              }
+
+              if(firsTime){
+                this.open();
+                firsTime = false;
+              }else{
+                assetAudioPlayer.playOrPause();
               }
             },
             backgroundColor: Colors.orange,
